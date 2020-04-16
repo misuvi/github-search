@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>GitHub Search</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>GitHub Users Search</h1>
+    </div>
+    <div id='root'>
+        <div class="searchArea header" id='root'>
+            <input type="text" @keyUp.enter="fetchData" placeholder="Enter Username you want to search Here" v-model="searchValue" @keyDown="reset">
+            <button @click="fetchData">Search</button>
+        </div>
+        <div v-if="foundu===1" id="userProfile">
+            <div id="imgdiv">
+                <img :src="userData.avatar_url" id="avatar">
+            </div>
+            <div id="userDetails">
+                <h3 v-if="userData.name">{{userData.name}}</h5>
+                <h6 v-if="userData.name">@{{userData.login}}</h6>
+                <h2 v-else>@{{userData.login}}</h2>
+                <div>
+                    <p v-if="userData.bio"><span>Bio : </span>{{userData.bio}}</p>
+                    <p v-else>Bio not available.</p>
+                    <p v-if="userData.company"><span>Company:</span>{{userData.company}}</p>
+                    <p v-else>Company not available.</p>
+                    <p v-if="userData.location"><span>Location:</span>{{userData.location}}</p>
+                    <p v-else>Location not available.</p>
+                </div>
+                <div id="buttondiv">
+                    <button @click="getfollowersoring('followers')" :disabled="!userData.followers">Followers({{userData.followers}})</button>
+                    <button @click="getfollowersoring('following')" :disabled="!userData.following">Following({{userData.following}})</button>
+                </div>
+                <div style="text-align: center;">
+                    <span><a :href="userData.html_url" target="_blank">View in Github</a></span>
+                </div>
+            </div>
+        </div>
+        <div v-else-if="foundu===-1" class="altdiv">
+            <span>Sorry! There's no user with the id '{{searchValue}}'</span>
+        </div>
+        <div v-else-if="foundu===0" class="altdiv">
+            <span>Searching...</span>
+        </div>
+        <div v-if="foundf===1" id="fmaindiv">
+            <!-- <div v-for="f in followersoring" class=fdiv> -->
+                <fdiv v-for="f in followersoring" :fdata="f" :changeuser="changeUser"></fdiv>
+            <!-- </div> -->
+        </div>
+        <!-- <userdiv /> -->
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
