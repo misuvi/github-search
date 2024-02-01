@@ -25,7 +25,7 @@ let search = new Vue({
             try{
                 this.foundu=0;
                 this.foundf=0;
-                const res = await fetch(`http://api.github.com/users/${this.searchValue}`);
+                const res = await fetch(`https://api.github.com/users/${this.searchValue}`);
                 this['userData'] = await res.json();
                 console.log(this.userData)
                 if(this.userData.login)
@@ -39,7 +39,7 @@ let search = new Vue({
         },
         getfollowersoring: async function(option){
             try{
-                const res = await fetch(`http://api.github.com/users/${this.searchValue}/${option}`);
+                const res = await fetch(`https://api.github.com/users/${this.searchValue}/${option}`);
                 this['followersoring']=await res.json();
                 console.log(this.followersoring)
                 this.foundf=0;
@@ -55,7 +55,7 @@ let search = new Vue({
         },
         changeUser: async function(newUser){
             try{
-            const res = await fetch(`http://api.github.com/users/${newUser.login}`);
+            const res = await fetch(`https://api.github.com/users/${newUser.login}`);
             this.userData = await res.json();
             this.foundu=undefined;
             this.searchValue=newUser.login;
